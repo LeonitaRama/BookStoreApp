@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons"
 import { router } from 'expo-router'
 import { signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { auth } from "../../firebase"
 
 const profile = () => {
@@ -13,15 +13,14 @@ const profile = () => {
   
       const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
-          setCurrentUser(user)
-          setLoading(false)
+          setCurrentUser(user);
+          setLoading(false);
         } else {
           router.replace("/login");
         }
       })
   
-      return () => unsubscribe()
-  
+      return () => unsubscribe();
     }, [])
 
   const handleSignOut = async () => {
@@ -45,6 +44,19 @@ const profile = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
+
+      <View style={styles.profileHeader}>
+        <Image
+          source={{
+            uri: currentUser.photoURL || 'https://via.placeholder.com/100', // default foto nëse nuk ka
+          }}
+          style={styles.profileImage}
+        />
+        <Text style={styles.userName}>
+          {currentUser.displayName || "User Name"}
+        </Text>
+      </View>
+
       <View style={styles.card}>
         <Text style={styles.label}>Email</Text>
         <Text style={styles.value}>{currentUser.email}</Text>
@@ -82,6 +94,21 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 16,
     color: "#6B7280",
+  },
+    profileHeader: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#111827",
   },
   card: {
     backgroundColor: "white",
