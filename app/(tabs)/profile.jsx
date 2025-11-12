@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import {router} from 'expo-router'
-import {Feather} from "@expo/vector-icons"
-import {auth} from "../../firebase"
+import { Feather } from "@expo/vector-icons"
+import { router } from 'expo-router'
 import { signOut } from 'firebase/auth'
+import { useEffect, useState } from 'react'
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { auth } from "../../firebase"
 
 const profile = () => {
   const [currentUser, setCurrentUser] = useState(null)

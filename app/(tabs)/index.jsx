@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../../firebase";
@@ -9,11 +9,14 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
 
+const router = useRouter();
+
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setUserEmail(user.email);
-        loadBooks(); // ngarko librat kur përdoruesi log in
+        setUserEmail(user.displayName || user.email);
+        loadBooks();
       } else {
         router.replace("/login");
       }
@@ -34,10 +37,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = router.addListener("focus", loadBooks);
-    return unsubscribe;
-  }, []);
 
   if (loading) {
     return (

@@ -3,6 +3,7 @@
     "name": "BookStore",
     "slug": "BookStore",
     "version": "1.0.0",
+    "owner": "leonitarama",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "bookstore",
